@@ -12,7 +12,7 @@ def main():
 
     """
 
-    with open("structure.cfg") as structure:
+    with open("structure.json") as structure:
         data = json.load(structure)
 
 
