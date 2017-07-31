@@ -5,22 +5,12 @@ Gallery generation
 
 import json
 import os
+import jinja2
 
-def list_files(startpath):
-    """
-    list folders with hierarchy
-    https://stackoverflow.com/questions/9727673/list-directory-tree-structure-in-python
-
-    """
-
-    for root, dirs, files in os.walk(startpath):
-        level = root.replace(startpath, '').count(os.sep)
-        indent = ' ' * 4 * (level)
-        print('{}{}/'.format(indent, os.path.basename(root)))
-        subindent = ' ' * 4 * (level + 1)
-        for f in files:
-            print('{}{}'.format(subindent, f))
-
+#Jinja decoding issues
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 def get_directory_tree(path):
     """
@@ -38,9 +28,9 @@ def get_directory_tree(path):
     #     res  = os.walk(dir)
 
     #     tree.append((str(dir), res[0], res[1]))
-    #     directories.extend(res[0]) 
+    #     directories.extend(res[0])
 
-    file_list =[] 
+    file_list = []
 
     for dir_, _, files in os.walk(path):
         for filen in files:
@@ -61,19 +51,30 @@ def main():
     files = get_directory_tree("/media/sf_music/src")
     galleries = {}
 
-    for index, f in enumerate(files):
+    model = open("gallery.html")
+    template = jinja2.Template(model.read())
+
+
+    for f in files:
         current_file = f.split("/")
-        for dir in current_file[:-1]:
-            if dir not in galleries:
-                galleries[dir] = []
+        for cdir in current_file[:-1]:
+            if cdir not in galleries:
+                galleries[cdir] = []
 
-            galleries[dir].append(f)
+            galleries[cdir].append(f)
 
-    print str(galleries)
+    # print str(galleries)
+
+    for gallery in galleries:
+        files = galleries[gallery]
+        gallery_content = template.render(files=files)
+        file = open("export/" + str(gallery) + ".html","w")
+        file.write(gallery_content)
+        file.close()
+        print("created file " + str("export/") + str(gallery) + ".html")
 
 
-
-    print str(files)
+    # print str(files)
 
     return
 
