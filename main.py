@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/home/nemecle/anaconda3/bin/python3.6
 """
 Gallery generation
 """
@@ -6,11 +6,16 @@ Gallery generation
 import json
 import os
 import jinja2
+import pprint
+
+
 
 #Jinja decoding issues
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+# reload(sys)
+# sys.setdefaultencoding('utf8')
+
+IMAGE_DIR = "img/"
 
 def get_directory_tree(path):
     """
@@ -36,8 +41,41 @@ def get_directory_tree(path):
         for filen in files:
             relative_path = os.path.relpath(dir_, path)
             file_list.append(os.path.join(relative_path, filen))
-
+    print("(get_directory_tree) returning {}".format(str(file_list)))
     return file_list
+
+
+def gen_gal_old(dir):
+    """
+
+
+    """
+
+    galleries = {}
+                                                                         
+    model = open("gallery.html")
+    # template = jinja2.Template(model.read())
+                                                                         
+                                                                         
+    for f in files:
+        current_file = f.split("/")
+        for cdir in current_file[:-1]:
+            if cdir not in galleries:
+                galleries[cdir] = []
+                                                                         
+            galleries[cdir].append(f)
+                                                                         
+    # print str(galleries)
+                                                                         
+    for gallery in galleries:
+        files = galleries[gallery]
+        gallery_content = template.render(files=files)
+        file = open("export/" + str(gallery) + ".html","w")
+        file.write(gallery_content)
+        file.close()
+        print("created file " + str("export/") + str(gallery) + ".html")
+        return
+
 
 def main():
     """
@@ -48,32 +86,32 @@ def main():
     # with open("structure.json") as structure:
     #     data = json.load(structure)
 
-    files = get_directory_tree("/media/sf_music/src")
-    galleries = {}
+    files = get_directory_tree(IMAGE_DIR)
+    # pprint.pprint(str(files))
+    
 
-    model = open("gallery.html")
-    template = jinja2.Template(model.read())
+    data = json.load(open('galleries.json'))
 
+    data = data[0]
+    pprint.pprint(str(data["galleries"][0]))
+    galleries = data["galleries"]
+    for gal in galleries:
+        print(gal["name"])
+        print(gal["default_img_name"])
+        print(gal["dir"])
+        print(gal["type"])
+        print(gal["thumb"])
+        print("sub galleries: ")
+        for subg in gal["subgal"]:
+            print("    {}".format(subg))
 
-    for f in files:
-        current_file = f.split("/")
-        for cdir in current_file[:-1]:
-            if cdir not in galleries:
-                galleries[cdir] = []
+        print("---------")
+        print("::" + gal["dir"] + " " + str(get_directory_tree(IMAGE_DIR + \
+                                                               gal["dir"])))
+        for img in get_directory_tree(gal["dir"]):
+            print(str(img))
 
-            galleries[cdir].append(f)
-
-    # print str(galleries)
-
-    for gallery in galleries:
-        files = galleries[gallery]
-        gallery_content = template.render(files=files)
-        file = open("export/" + str(gallery) + ".html","w")
-        file.write(gallery_content)
-        file.close()
-        print("created file " + str("export/") + str(gallery) + ".html")
-
-
+        print("=============")
     # print str(files)
 
     return

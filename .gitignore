@@ -1,3 +1,5 @@
 img/*
 output/*
+*.sw*
+__pycache__/*
 

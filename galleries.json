@@ -1,0 +1,176 @@
+[
+    {
+        "galleries": [
+            {
+                "name": "Drawings",
+                "default_img_name": "Drawings",
+                "dir": "Drawings",
+                "type": "default",
+                "thumb": "",
+                "subgal": [
+                    "Dumpster",
+                    "Traditional",
+                    "Inktober 2016",
+                    "Inktober 2017"
+                ]
+            },
+            {
+                "name": "Dumpster",
+                "default_img_name": "Drawings/dumpster",
+                "dir": "Drawings/dumpster",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Traditional",
+                "default_img_name": "Drawings/Traditional",
+                "dir": "Drawings/Traditional",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Inktober",
+                "default_img_name": "Drawings/Inktober",
+                "dir": "Drawings/Inktober",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Inktober 2016",
+                "default_img_name": "Drawings/Inktober/Inktober 2016",
+                "dir": "Drawings/Inktober/Inktober 2016",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Inktober 2017",
+                "default_img_name": "Drawings/Inktober/Inktober 2017",
+                "dir": "Drawings/Inktober/Inktober 2017",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Photos",
+                "default_img_name": "Photos",
+                "dir": "Photos",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                    "Vendee",
+                    "Thunderstorm",
+                    "Firework",
+                    "Ireland",
+                    "concerts"
+                ]
+            },
+            {
+                "name": "Vendee",
+                "default_img_name": "Photos/Vendee",
+                "dir": "Photos/Vendee",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Thunderstorm",
+                "default_img_name": "Photos/Thunderstorm",
+                "dir": "Photos/Thunderstorm",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Firework",
+                "default_img_name": "Photos/Firework",
+                "dir": "Photos/Firework",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                    "Aberdeen",
+                    "Annecy_feu_dartifice"
+                ]
+            },
+            {
+                "name": "Aberdeen",
+                "default_img_name": "Photos/Firework/Aberdeen",
+                "dir": "Photos/Firework/Aberdeen",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Annecy_feu_dartifice",
+                "default_img_name": "Photos/Firework/Annecy_feu_dartifice",
+                "dir": "Photos/Firework/Annecy_feu_dartifice",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Ireland",
+                "default_img_name": "Photos/Ireland",
+                "dir": "Photos/Ireland",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "concerts",
+                "default_img_name": "Photos/concerts",
+                "dir": "Photos/concerts",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                    "PRATOS @ La fête de la musique (2016)",
+                    "SINGLE LADIES @ L'Hôtel de la musique"
+                ]
+            },
+            {
+                "name": "PRATOS @ La fête de la musique (2016)",
+                "default_img_name": "Photos/concerts/PRATOS @ La fête de la musique (2016)",
+                "dir": "Photos/concerts/PRATOS @ La fête de la musique (2016)",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "SINGLE LADIES @ L'Hôtel de la musique",
+                "default_img_name": "Photos/concerts/SINGLE LADIES @ L'Hôtel de la musique",
+                "dir": "Photos/concerts/SINGLE LADIES @ L'Hôtel de la musique",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            },
+            {
+                "name": "Other",
+                "default_img_name": "Other",
+                "dir": "Other",
+                "type": "default",
+                "thumb":"",
+                "subgal" : [
+                ]
+            }
+        ]
+    },
+    {
+        "photos_override": [
+        ]
+    }
+]
