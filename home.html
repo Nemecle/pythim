@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="main.css"/>
+  <meta charset="UTF-8">
+    <title>{{ name }}</title>
+</head>
+<body>
+  <div id="gallery">
+    <h1>{{ name }}</h1>
+    <div class="content">{% for item in files %}
+        <div class = "image"><a href = "{{ item }}"><img class = "img" src = "{{ item }}" alt = "{{ item }}" /></a></div>{% endfor %}
+  </div>
+</body>
+</html>

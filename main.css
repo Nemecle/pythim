@@ -1,0 +1,55 @@
+body{
+  width:100%;
+  background-color:#222;
+  color: #666;
+  font-family: Courier, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-size: 5vw;
+  width:100%;
+  text-align:center;
+  /*font-family: Georgia, serif;*/
+  font-family: Courier, sans-serif;
+  font-size: 100px;
+}
+
+h2 {
+  font-size: 3vh;
+  width: 100%;
+  text-align:center;
+  margin:0;
+  margin-bottom: 50px;
+}
+
+a {
+  color: #666;
+}
+
+img {
+  height:200px;
+  width:auto;
+  font-size: 300px;
+}
+
+#gallery {
+  text-align: center;
+  width: 100%;
+  /*margin: 0;*/
+}
+
+.image {
+  /* width:33%; */
+  margin:auto;
+  display: inline-block;
+}
+
+.pic {
+  width: 100%;
+  object-fit: contain;
+}
+
+.late {
+  color: #833;
+}

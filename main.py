@@ -19,6 +19,9 @@ import sys
 # sys.setdefaultencoding('utf8')
 
 IMAGE_DIR = "img/"
+# IMAGE_DIR = "/media/nemecle/DATA/transit/gd/photography"
+CONFIG_FILE = "galleries.json"
+# CONFIG_FILE = "/media/nemecle/DATA/transit/gd/galleries.json"
 
 
 def gen_gal_old(dir):
@@ -29,7 +32,7 @@ def gen_gal_old(dir):
 
     galleries = {}
                                                                          
-    model = open("gallery.html")
+    model = open("home.html")
     # template = jinja2.Template(model.read())
                                                                          
                                                                          
@@ -119,14 +122,18 @@ def main():
 
     files = get_directory_tree(IMAGE_DIR)
     # pprint.pprint(str(files))
-    
+    data = json.load(open(CONFIG_FILE))
 
-    data = json.load(open('galleries.json'))
+    model = open("home.html")
+    template = jinja2.Template(model.read())
+
 
     data = data[0]
     pprint.pprint(str(data["galleries"][0]))
     galleries = data["galleries"]
     for gal in galleries:
+
+        list_imgs = []
         print(gal["name"])
         print(gal["default_img_name"])
         print(gal["dir"])
@@ -137,12 +144,27 @@ def main():
             print("    {}".format(subg))
 
         print("---------")
+
+
         print("::" + gal["dir"] + " " + str(get_directory_tree(IMAGE_DIR + \
                                                                gal["dir"])))
         for img in get_directory_tree(gal["dir"]):
             print(str(img))
-
+            
         print("=============")
+
+        list_imgs = get_directory_tree(IMAGE_DIR + gal["dir"])
+        list_imgs = [IMAGE_DIR + gal["dir"] + "/" + s for s in list_imgs]
+
+        print("number of files: {}".format(len(list_imgs)))
+        gallery_content = template.render(name=gal["name"], files=list_imgs)
+        file = open("export/" + str(gal["dir"]) + ".html","w")
+        file.write(gallery_content)
+        file.close()
+        print("created file " + str("export/") + str(gal["dir"]) + ".html")
+        return
+
+
     # print str(files)
 
     return
