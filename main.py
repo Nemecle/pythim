@@ -19,41 +19,10 @@ import sys
 # sys.setdefaultencoding('utf8')
 
 IMAGE_DIR = "/home/nemecle/transit/ne_art/pythim/export/img/"
-# IMAGE_DIR = "/media/nemecle/DATA/transit/gd/photography"
+HTML_DIR = "/home/nemecle/transit/ne_art/pythim/export/html/"
+THUMB_DIR = "/home/nemecle/transit/ne_art/pythim/export/thumbnails/"
+THUMB_SIZE = 500
 CONFIG_FILE = "galleries.json"
-# CONFIG_FILE = "/media/nemecle/DATA/transit/gd/galleries.json"
-
-
-def gen_gal_old(dir):
-    """
-    DEPRECATED, WILL BE DELETED
-
-    """
-
-    galleries = {}
-                                                                         
-    model = open("home.html")
-    # template = jinja2.Template(model.read())
-                                                                         
-                                                                         
-    for f in files:
-        current_file = f.split("/")
-        for cdir in current_file[:-1]:
-            if cdir not in galleries:
-                galleries[cdir] = []
-                                                                         
-            galleries[cdir].append(f)
-                                                                         
-    # print str(galleries)
-                                                                         
-    for gallery in galleries:
-        files = galleries[gallery]
-        gallery_content = template.render(files=files)
-        file = open("export/" + str(gallery) + ".html","w")
-        file.write(gallery_content)
-        file.close()
-        print("created file " + str("export/") + str(gallery) + ".html")
-        return
 
 
 def get_directory_tree(path):
@@ -63,16 +32,6 @@ def get_directory_tree(path):
     path -- path to list
 
     """
-
-    # directories = [path]
-    # tree = []
-
-    # while directories:
-    #     dir = directories.pop(0)
-    #     res  = os.walk(dir)
-
-    #     tree.append((str(dir), res[0], res[1]))
-    #     directories.extend(res[0])
 
     file_list = []
 
@@ -84,31 +43,28 @@ def get_directory_tree(path):
     return file_list
 
 
-def thumbnail(image_details): 
+def thumbnail(img, directory): 
     """
-    https://stackoverflow.com/questions/8631076/what-is-the-fastest-way-to-generate-image-thumbnails-in-python
+    create a thumbnail for a given img and store in directory
 
     """
 
-    size, filename = image_details
+    filename = img.split("/")[-1]
+    print("thumbnailing {} to {}".format(filename, directory))
     try:
-        Image.open(filename).thumbnail(size).save("thumbnail_%s" % filename)
-        return 'OK'
+        print("opening")
+        image = Image.open(img)
+
+        print("thumbnail'd")
+        image.thumbnail((THUMB_SIZE,THUMB_SIZE), Image.NEAREST)
+
+        print("saved")
+        image.save(directory + filename)
+
+        return 0
+
     except Exception as e: 
-        return e 
-
-
-def generate_thumbnails(img_dir, thumb_dir, size):
-    """
-    generate thumbnails for given directory in another directory
-    img_dir   -- directory of images to process
-    thumb_dir -- directory in which thumbnails are written
-    size      -- max size, in form of (x, y)
-
-    """
-
-
-    return
+        print("(thumbnail) " + str(e))
 
 
 def main():
@@ -116,9 +72,6 @@ def main():
     generate gallery based on configuration file.
 
     """
-
-    # with open("structure.json") as structure:
-    #     data = json.load(structure)
 
     files = get_directory_tree(IMAGE_DIR)
     # pprint.pprint(str(files))
@@ -128,43 +81,53 @@ def main():
     template = jinja2.Template(model.read())
 
 
+    # for f in files:
+    #     thumbnail(IMAGE_DIR + f, THUMB_DIR)
+
+
+
     data = data[0]
-    # pprint.pprint(str(data["galleries"][0]))
     galleries = data["galleries"]
-    for gal in galleries:
+
+    name_to_path = {}
+
+    for name, gallery in galleries.items():
+        name_to_path[name] = gallery["dir"]
+
+    for name, gallery in galleries.items():
 
         list_imgs = []
-        # print(gal["name"])
-        # print(gal["default_img_name"])
-        # print(gal["dir"])
-        # print(gal["type"])
-        # print(gal["thumb"])
-        # print("sub galleries: ")
-        # for subg in gal["subgal"]:
-        #     print("    {}".format(subg))
+        list_subs = []
+
+        #build name <-> path list for sub galleries
+        for sub in gallery["subgal"]:
+            list_subs.append((galleries[sub]["name"], HTML_DIR + sub + ".html"))
 
 
             
         print("=============")
 
-        list_imgs = get_directory_tree(IMAGE_DIR + gal["dir"])
-        list_imgs = [IMAGE_DIR + gal["dir"] + "/" + s for s in list_imgs]
+        list_imgs = get_directory_tree(IMAGE_DIR + gallery["dir"])
+        list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
+        list_imgs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
 
-        dir_tree = gal["dir"].split("/")[:-1]
+        dir_tree = gallery["dir"].split("/")[:-1]
+
+        path = []
+        for direc in dir_tree: # building breadcrumb links
+            path.append((direc, HTML_DIR + direc + ".html"))
+
+        print("length of path: {}".format(len(path)))
 
         print("number of files: {}".format(len(list_imgs)))
-        gallery_content = template.render(name=gal["name"], files=list_imgs, path=dir_tree)
+        gallery_content = template.render(name=gallery["name"], files=list_imgs, path=path, subs=list_subs)
 
 
-        os.makedirs(os.path.dirname("export/" + str(gal["dir"]) + ".html"), exist_ok=True)
-        file = open("export/" + str(gal["dir"]) + ".html","w")
+        # os.makedirs(os.path.dirname("export/" + str(gallery["dir"]) + ".html"), exist_ok=True)
+        file = open(HTML_DIR + name + ".html","w")
         file.write(gallery_content)
         file.close()
-        print("created file " + str("export/") + str(gal["dir"]) + ".html")
-        # return
-
-
-    # print str(files)
+        print("created file " + str("export/") + str(gallery["dir"]) + ".html")
 
     return
 

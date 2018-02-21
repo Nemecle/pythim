@@ -1,7 +1,7 @@
 [
     {
-        "galleries": [
-            {
+        "galleries": {
+            "Drawings": {
                 "name": "Drawings",
                 "default_img_name": "Drawings",
                 "dir": "Drawings",
@@ -14,7 +14,7 @@
                     "Inktober 2017"
                 ]
             },
-            {
+            "Dumpster": {
                 "name": "Dumpster",
                 "default_img_name": "Drawings/dumpster",
                 "dir": "Drawings/dumpster",
@@ -23,7 +23,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Traditional": {
                 "name": "Traditional",
                 "default_img_name": "Drawings/Traditional",
                 "dir": "Drawings/Traditional",
@@ -32,7 +32,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Inktober": {
                 "name": "Inktober",
                 "default_img_name": "Drawings/Inktober",
                 "dir": "Drawings/Inktober",
@@ -41,7 +41,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Inktober 2016": {
                 "name": "Inktober 2016",
                 "default_img_name": "Drawings/Inktober/Inktober 2016",
                 "dir": "Drawings/Inktober/Inktober 2016",
@@ -50,7 +50,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Inktober 2017": {
                 "name": "Inktober 2017",
                 "default_img_name": "Drawings/Inktober/Inktober 2017",
                 "dir": "Drawings/Inktober/Inktober 2017",
@@ -59,7 +59,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Photos": {
                 "name": "Photos",
                 "default_img_name": "Photos",
                 "dir": "Photos",
@@ -73,7 +73,7 @@
                     "concerts"
                 ]
             },
-            {
+            "Vendee": {
                 "name": "Vendee",
                 "default_img_name": "Photos/Vendee",
                 "dir": "Photos/Vendee",
@@ -82,7 +82,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Thunderstorm": {
                 "name": "Thunderstorm",
                 "default_img_name": "Photos/Thunderstorm",
                 "dir": "Photos/Thunderstorm",
@@ -91,7 +91,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Firework": {
                 "name": "Firework",
                 "default_img_name": "Photos/Firework",
                 "dir": "Photos/Firework",
@@ -102,7 +102,7 @@
                     "Annecy_feu_dartifice"
                 ]
             },
-            {
+            "Aberdeen": {
                 "name": "Aberdeen",
                 "default_img_name": "Photos/Firework/Aberdeen",
                 "dir": "Photos/Firework/Aberdeen",
@@ -111,7 +111,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Annecy_feu_dartifice": {
                 "name": "Annecy_feu_dartifice",
                 "default_img_name": "Photos/Firework/Annecy_feu_dartifice",
                 "dir": "Photos/Firework/Annecy_feu_dartifice",
@@ -120,7 +120,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Ireland": {
                 "name": "Ireland",
                 "default_img_name": "Photos/Ireland",
                 "dir": "Photos/Ireland",
@@ -129,7 +129,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "concerts": {
                 "name": "concerts",
                 "default_img_name": "Photos/concerts",
                 "dir": "Photos/concerts",
@@ -140,7 +140,7 @@
                     "single_ladies"
                 ]
             },
-            {
+            "pratos": {
                 "name": "pratos",
                 "default_img_name": "Photos/concerts/pratos",
                 "dir": "Photos/concerts/pratos",
@@ -149,7 +149,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "single_ladies": {
                 "name": "Single Ladies",
                 "default_img_name": "Photos/concerts/single_ladies",
                 "dir": "Photos/concerts/single_ladies",
@@ -158,7 +158,7 @@
                 "subgal" : [
                 ]
             },
-            {
+            "Other": {
                 "name": "Other",
                 "default_img_name": "Other",
                 "dir": "Other",
@@ -167,7 +167,7 @@
                 "subgal" : [
                 ]
             }
-        ]
+        }
     },
     {
         "photos_override": [
