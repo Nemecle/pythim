@@ -136,23 +136,23 @@
                 "type": "default",
                 "thumb":"",
                 "subgal" : [
-                    "PRATOS @ La fête de la musique (2016)",
-                    "SINGLE LADIES @ L'Hôtel de la musique"
+                    "pratos",
+                    "single_ladies"
                 ]
             },
             {
-                "name": "PRATOS @ La fête de la musique (2016)",
-                "default_img_name": "Photos/concerts/PRATOS @ La fête de la musique (2016)",
-                "dir": "Photos/concerts/PRATOS @ La fête de la musique (2016)",
+                "name": "pratos",
+                "default_img_name": "Photos/concerts/pratos",
+                "dir": "Photos/concerts/pratos",
                 "type": "default",
                 "thumb":"",
                 "subgal" : [
                 ]
             },
             {
-                "name": "SINGLE LADIES @ L'Hôtel de la musique",
-                "default_img_name": "Photos/concerts/SINGLE LADIES @ L'Hôtel de la musique",
-                "dir": "Photos/concerts/SINGLE LADIES @ L'Hôtel de la musique",
+                "name": "Single Ladies",
+                "default_img_name": "Photos/concerts/single_ladies",
+                "dir": "Photos/concerts/single_ladies",
                 "type": "default",
                 "thumb":"",
                 "subgal" : [

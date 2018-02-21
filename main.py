@@ -18,7 +18,7 @@ import sys
 # reload(sys)
 # sys.setdefaultencoding('utf8')
 
-IMAGE_DIR = "img/"
+IMAGE_DIR = "/home/nemecle/transit/ne_art/pythim/export/img/"
 # IMAGE_DIR = "/media/nemecle/DATA/transit/gd/photography"
 CONFIG_FILE = "galleries.json"
 # CONFIG_FILE = "/media/nemecle/DATA/transit/gd/galleries.json"
@@ -80,7 +80,7 @@ def get_directory_tree(path):
         for filen in files:
             relative_path = os.path.relpath(dir_, path)
             file_list.append(os.path.join(relative_path, filen))
-    print("(get_directory_tree) returning {}".format(str(file_list)))
+    # print("(get_directory_tree) returning {}".format(str(file_list)))
     return file_list
 
 
@@ -129,40 +129,39 @@ def main():
 
 
     data = data[0]
-    pprint.pprint(str(data["galleries"][0]))
+    # pprint.pprint(str(data["galleries"][0]))
     galleries = data["galleries"]
     for gal in galleries:
 
         list_imgs = []
-        print(gal["name"])
-        print(gal["default_img_name"])
-        print(gal["dir"])
-        print(gal["type"])
-        print(gal["thumb"])
-        print("sub galleries: ")
-        for subg in gal["subgal"]:
-            print("    {}".format(subg))
-
-        print("---------")
+        # print(gal["name"])
+        # print(gal["default_img_name"])
+        # print(gal["dir"])
+        # print(gal["type"])
+        # print(gal["thumb"])
+        # print("sub galleries: ")
+        # for subg in gal["subgal"]:
+        #     print("    {}".format(subg))
 
 
-        print("::" + gal["dir"] + " " + str(get_directory_tree(IMAGE_DIR + \
-                                                               gal["dir"])))
-        for img in get_directory_tree(gal["dir"]):
-            print(str(img))
             
         print("=============")
 
         list_imgs = get_directory_tree(IMAGE_DIR + gal["dir"])
         list_imgs = [IMAGE_DIR + gal["dir"] + "/" + s for s in list_imgs]
 
+        dir_tree = gal["dir"].split("/")[:-1]
+
         print("number of files: {}".format(len(list_imgs)))
-        gallery_content = template.render(name=gal["name"], files=list_imgs)
+        gallery_content = template.render(name=gal["name"], files=list_imgs, path=dir_tree)
+
+
+        os.makedirs(os.path.dirname("export/" + str(gal["dir"]) + ".html"), exist_ok=True)
         file = open("export/" + str(gal["dir"]) + ".html","w")
         file.write(gallery_content)
         file.close()
         print("created file " + str("export/") + str(gal["dir"]) + ".html")
-        return
+        # return
 
 
     # print str(files)

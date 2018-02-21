@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="main.css"/>
+  <link rel="stylesheet" href="/home/nemecle/transit/ne_art/pythim/export/main.css"/>
   <meta charset="UTF-8">
     <title>{{ name }}</title>
 </head>
 <body>
   <div id="gallery">
-    <h1>{{ name }}</h1>
+    <h2>{% for dir in path %}{{ dir }}<span class = "accent">·</span>{% endfor %}<span class = "main_directory">{{ name }}</span></h2>
     <div class="content">{% for item in files %}
         <div class = "image"><a href = "{{ item }}"><img class = "img" src = "{{ item }}" alt = "{{ item }}" /></a></div>{% endfor %}
   </div>
