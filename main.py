@@ -18,11 +18,14 @@ import sys
 # reload(sys)
 # sys.setdefaultencoding('utf8')
 
-IMAGE_DIR = "/home/nemecle/transit/ne_art/pythim/export/img/"
-HTML_DIR = "/home/nemecle/transit/ne_art/pythim/export/html/"
-THUMB_DIR = "/home/nemecle/transit/ne_art/pythim/export/thumbnails/"
-THUMB_SIZE = 500
 CONFIG_FILE = "galleries.json"
+
+BASE_DIR  = "export/html/"
+HTML_DIR  = BASE_DIR + ""
+IMAGE_DIR = "img/"
+THUMB_DIR = "thumbnails/"
+
+THUMB_SIZE = 1000
 
 
 def get_directory_tree(path):
@@ -96,31 +99,42 @@ def main():
 
     for name, gallery in galleries.items():
 
+        print("=============")
+        print("building: {}".format(name))
+
         list_imgs = []
         list_subs = []
 
         #build name <-> path list for sub galleries
         for sub in gallery["subgal"]:
-            list_subs.append((galleries[sub]["name"], HTML_DIR + sub + ".html"))
+            list_subs.append((galleries[sub]["name"], sub + ".html"))
 
 
             
-        print("=============")
 
         list_imgs = get_directory_tree(IMAGE_DIR + gallery["dir"])
+        # list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
+        # list_imgs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
+
+        list_thumbs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
         list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
-        list_imgs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
+
+        imgs = list(zip(list_thumbs, list_imgs))
 
         dir_tree = gallery["dir"].split("/")[:-1]
 
         path = []
         for direc in dir_tree: # building breadcrumb links
-            path.append((direc, HTML_DIR + direc + ".html"))
-
-        print("length of path: {}".format(len(path)))
+            path.append((direc, direc + ".html"))
 
         print("number of files: {}".format(len(list_imgs)))
-        gallery_content = template.render(name=gallery["name"], files=list_imgs, path=path, subs=list_subs)
+        gallery_content = template.render(
+                                          name=gallery["name"], \
+                                          files=imgs, \
+                                          path=path, \
+                                          subs=list_subs, \
+                                          description=gallery["description"] \
+                                          )
 
 
         # os.makedirs(os.path.dirname("export/" + str(gallery["dir"]) + ".html"), exist_ok=True)

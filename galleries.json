@@ -1,17 +1,53 @@
 [
     {
         "galleries": {
+            "All": {
+                "name": "*",
+                "default_img_name": "All",
+                "dir": ".",
+                "type": "default",
+                "description":"ah oui ohla la pouet pouet koulaga pénis peremptoire séminitique",
+                "subgal": [
+                    "Traditional",
+                    "digital",
+                    "Photos",
+                    "Dumpster"
+                ]
+            },
+            "Featured": {
+                "name": "Drawings",
+                "default_img_name": "Featured",
+                "dir": ".",
+                "type": "default",
+                "description":"ah oui ohla la pouet pouet koulaga pénis peremptoire séminitique",
+                "subgal": [
+                    "Traditional",
+                    "digital",
+                    "Photos",
+                    "Dumpster"
+                ]
+            },
             "Drawings": {
                 "name": "Drawings",
                 "default_img_name": "Drawings",
                 "dir": "Drawings",
                 "type": "default",
-                "thumb": "",
+                "description":"ah oui ohla la pouet pouet koulaga pénis peremptoire séminitique",
                 "subgal": [
                     "Dumpster",
                     "Traditional",
+                    "digital",
                     "Inktober 2016",
                     "Inktober 2017"
+                ]
+            },
+            "digital": {
+                "name": "digital",
+                "default_img_name": "Drawings/Digital",
+                "dir": "Drawings/Digital",
+                "type": "default",
+                "description":"blih blah bluh blah blih blah bluh blah blih blah bluh blah blih blah bluh blah blih blah bluh blah",
+                "subgal" : [
                 ]
             },
             "Dumpster": {
@@ -19,7 +55,7 @@
                 "default_img_name": "Drawings/dumpster",
                 "dir": "Drawings/dumpster",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -28,7 +64,7 @@
                 "default_img_name": "Drawings/Traditional",
                 "dir": "Drawings/Traditional",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -37,8 +73,10 @@
                 "default_img_name": "Drawings/Inktober",
                 "dir": "Drawings/Inktober",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
+                    "Inktober 2016",
+                    "Inktober 2017"
                 ]
             },
             "Inktober 2016": {
@@ -46,7 +84,7 @@
                 "default_img_name": "Drawings/Inktober/Inktober 2016",
                 "dir": "Drawings/Inktober/Inktober 2016",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -55,7 +93,7 @@
                 "default_img_name": "Drawings/Inktober/Inktober 2017",
                 "dir": "Drawings/Inktober/Inktober 2017",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -64,7 +102,7 @@
                 "default_img_name": "Photos",
                 "dir": "Photos",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                     "Vendee",
                     "Thunderstorm",
@@ -78,7 +116,7 @@
                 "default_img_name": "Photos/Vendee",
                 "dir": "Photos/Vendee",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -87,7 +125,7 @@
                 "default_img_name": "Photos/Thunderstorm",
                 "dir": "Photos/Thunderstorm",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -96,7 +134,7 @@
                 "default_img_name": "Photos/Firework",
                 "dir": "Photos/Firework",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                     "Aberdeen",
                     "Annecy_feu_dartifice"
@@ -107,7 +145,7 @@
                 "default_img_name": "Photos/Firework/Aberdeen",
                 "dir": "Photos/Firework/Aberdeen",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -116,7 +154,7 @@
                 "default_img_name": "Photos/Firework/Annecy_feu_dartifice",
                 "dir": "Photos/Firework/Annecy_feu_dartifice",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -125,7 +163,7 @@
                 "default_img_name": "Photos/Ireland",
                 "dir": "Photos/Ireland",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -134,7 +172,7 @@
                 "default_img_name": "Photos/concerts",
                 "dir": "Photos/concerts",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                     "pratos",
                     "single_ladies"
@@ -145,7 +183,7 @@
                 "default_img_name": "Photos/concerts/pratos",
                 "dir": "Photos/concerts/pratos",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -154,7 +192,7 @@
                 "default_img_name": "Photos/concerts/single_ladies",
                 "dir": "Photos/concerts/single_ladies",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             },
@@ -163,7 +201,7 @@
                 "default_img_name": "Other",
                 "dir": "Other",
                 "type": "default",
-                "thumb":"",
+                "description":"",
                 "subgal" : [
                 ]
             }
