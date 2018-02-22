@@ -1,5 +1,7 @@
 img/*
+img_/*
 output/*
 *.sw*
 __pycache__/*
+.gitignore
 

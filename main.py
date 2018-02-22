@@ -18,13 +18,25 @@ import sys
 # reload(sys)
 # sys.setdefaultencoding('utf8')
 
-CONFIG_FILE = "galleries.json"
+
+## test config
+# CONFIG_FILE = "galleries.json"
+
+# BASE_DIR  = "export/html/"
+# HTML_DIR  = BASE_DIR + ""
+# IMAGE_DIR = "img/"
+# THUMB_DIR = "thumbnails/"
+
+CONFIG_FILE = "nem.json"
 
 BASE_DIR  = "export/html/"
 HTML_DIR  = BASE_DIR + ""
 IMAGE_DIR = "img/"
 THUMB_DIR = "thumbnails/"
 
+
+
+GENERATE_THUMBNAILS = False
 THUMB_SIZE = 1000
 
 
@@ -37,6 +49,11 @@ def get_directory_tree(path):
     """
 
     file_list = []
+
+    try:
+        os.stat(path)
+    except:
+        print("(get_directory_tree) {} does not exist.".format(path))
 
     for dir_, _, files in os.walk(path):
         for filen in files:
@@ -84,8 +101,9 @@ def main():
     template = jinja2.Template(model.read())
 
 
-    # for f in files:
-    #     thumbnail(IMAGE_DIR + f, THUMB_DIR)
+    if GENERATE_THUMBNAILS:
+        for f in files:
+            thumbnail(IMAGE_DIR + f, BASE_DIR + THUMB_DIR)
 
 
 
@@ -111,10 +129,14 @@ def main():
 
 
             
+        print("working with: " + IMAGE_DIR + gallery["dir"])
 
         list_imgs = get_directory_tree(IMAGE_DIR + gallery["dir"])
         # list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
         # list_imgs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
+
+        print("number of files: {}".format(len(list_imgs)))
+
 
         list_thumbs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
         list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
@@ -127,7 +149,6 @@ def main():
         for direc in dir_tree: # building breadcrumb links
             path.append((direc, direc + ".html"))
 
-        print("number of files: {}".format(len(list_imgs)))
         gallery_content = template.render(
                                           name=gallery["name"], \
                                           files=imgs, \
@@ -141,7 +162,7 @@ def main():
         file = open(HTML_DIR + name + ".html","w")
         file.write(gallery_content)
         file.close()
-        print("created file " + str("export/") + str(gallery["dir"]) + ".html")
+        print("created file " + HTML_DIR + str(name) + ".html")
 
     return
 

@@ -6,6 +6,11 @@ body{
   text-align: center;
 }
 
+.main {
+  width: 95%;
+  margin: auto;
+}
+
 h1 {
   font-size: 5vw;
   width:100%;
@@ -16,21 +21,45 @@ h1 {
 }
 
 h2 {
-  font-size: 3vh;
-  width: 100%;
-  text-align:center;
+  font-size: 30px;
+  width: 95%;
+  text-align:left;
+  color: #aaa;
   margin:0;
-  margin-bottom: 50px;
+
+  padding-left: 50px;
 }
 
-a {
+h3 {
+  font-size: 30px;
+  min-height: 36px;
+  width: 95%;
+  text-align:left;
+  color: #aaa;
+  margin:0;
+  margin-bottom: 20px;
+  padding-left: 50px;
+}
+
+.subs {
   color: #666;
 }
 
+.desc {
+  /*min-height: ;*/
+  color: #aaa;
+  font-size: 20px;
+  margin-bottom: 20px;
+  min-height: 30px;
+}
+
+a {
+  text-decoration: none;
+}
+
 img {
-  height:200px;
+  height:15vw;
   width:auto;
-  font-size: 300px;
 }
 
 #gallery {
@@ -50,6 +79,11 @@ img {
   object-fit: contain;
 }
 
-.late {
-  color: #833;
+
+.accent {
+  color: #307c53;
+}
+
+.main_directory {
+  font-size: 60px;
 }
