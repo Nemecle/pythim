@@ -10,6 +10,7 @@ import pprint
 
 from multiprocessing import Pool
 from PIL import Image
+from PIL import ExifTags
 
 
 
@@ -36,7 +37,7 @@ THUMB_DIR = "thumbnails/"
 
 
 
-GENERATE_THUMBNAILS = False
+GENERATE_THUMBNAILS = True
 THUMB_SIZE = 1000
 
 
@@ -66,15 +67,34 @@ def get_directory_tree(path):
 def thumbnail(img, directory): 
     """
     create a thumbnail for a given img and store in directory
+    EXIF code:
+      https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image/6218425#6218425
 
     """
 
     filename = img.split("/")[-1]
     print("thumbnailing {} to {}".format(filename, directory))
+
     try:
         print("opening")
         image = Image.open(img)
 
+        for orientation in ExifTags.TAGS.keys() : 
+            if ExifTags.TAGS[orientation]=='Orientation' : break
+
+        exif=dict(image._getexif().items())
+
+        if   exif[orientation] == 3 : 
+            image=image.rotate(180, expand=True)
+        elif exif[orientation] == 6 : 
+            image=image.rotate(270, expand=True)
+        elif exif[orientation] == 8 : 
+            image=image.rotate(90, expand=True)
+
+    except Exception as e: 
+        print("(thumbnail) EXIF: " + str(e))
+
+    try:
         print("thumbnail'd")
         image.thumbnail((THUMB_SIZE,THUMB_SIZE), Image.NEAREST)
 
@@ -84,7 +104,7 @@ def thumbnail(img, directory):
         return 0
 
     except Exception as e: 
-        print("(thumbnail) " + str(e))
+        print("(thumbnail) saving: " + str(e))
 
 
 def main():
