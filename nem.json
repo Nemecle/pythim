@@ -8,9 +8,19 @@
         "type": "default",
         "description": "All of my work",
         "subgal": [
+          "Featured",
           "Photography",
           "Drawings",
           "Archives"
+        ]
+      },
+      "Featured": {
+        "name": "Featured",
+        "default_img_name": "Featured",
+        "dir": "featured",
+        "type": "default",
+        "description": "",
+        "subgal": [
         ]
       },
       "Archives": {

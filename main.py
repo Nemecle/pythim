@@ -37,7 +37,7 @@ THUMB_DIR = "thumbnails/"
 
 
 
-GENERATE_THUMBNAILS = True
+GENERATE_THUMBNAILS = False
 THUMB_SIZE = 1000
 
 
@@ -73,10 +73,10 @@ def thumbnail(img, directory):
     """
 
     filename = img.split("/")[-1]
-    print("thumbnailing {} to {}".format(filename, directory))
+    # print("thumbnailing {} to {}".format(filename, directory))
 
     try:
-        print("opening")
+        #   print("opening")
         image = Image.open(img)
 
         for orientation in ExifTags.TAGS.keys() : 
@@ -92,13 +92,14 @@ def thumbnail(img, directory):
             image=image.rotate(90, expand=True)
 
     except Exception as e: 
-        print("(thumbnail) EXIF: " + str(e))
+        pass
+        # print("(thumbnail) EXIF: " + str(e))
 
     try:
-        print("thumbnail'd")
+        #print("thumbnail'd")
         image.thumbnail((THUMB_SIZE,THUMB_SIZE), Image.NEAREST)
 
-        print("saved")
+        #print("saved")
         image.save(directory + filename)
 
         return 0
@@ -122,9 +123,12 @@ def main():
 
 
     if GENERATE_THUMBNAILS:
-        for f in files:
+        file_number = len(files)
+        for i, f in enumerate(files):
+            print("thumbnails: {}% ({} files processed)".format(int(i * 100/file_number), i), end="\r")
             thumbnail(IMAGE_DIR + f, BASE_DIR + THUMB_DIR)
 
+    print()
 
 
     data = data[0]
