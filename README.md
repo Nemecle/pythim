@@ -8,4 +8,3 @@ TODO:
 * add automatic generation of json config from existing directory;
 * add progressive loading/pages?
 * fix main page title?
-* Change gallery type to template link

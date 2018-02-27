@@ -29,6 +29,7 @@ import sys
 # THUMB_DIR = "thumbnails/"
 
 CONFIG_FILE = "nem.json"
+DEFAULT_TEMPLATE = "home.html"
 
 BASE_DIR  = "export/html/"
 HTML_DIR  = BASE_DIR + ""
@@ -37,7 +38,7 @@ THUMB_DIR = "thumbnails/"
 
 
 
-GENERATE_THUMBNAILS = False
+GENERATE_THUMBNAILS = True
 THUMB_SIZE = 1000
 
 
@@ -118,13 +119,11 @@ def main():
     # pprint.pprint(str(files))
     data = json.load(open(CONFIG_FILE))
 
-    model = open("home.html")
-    template = jinja2.Template(model.read())
-
 
     if GENERATE_THUMBNAILS:
         file_number = len(files)
         for i, f in enumerate(files):
+            print("", end="\r")
             print("thumbnails: {}% ({} files processed)".format(int(i * 100/file_number), i), end="\r")
             thumbnail(IMAGE_DIR + f, BASE_DIR + THUMB_DIR)
 
@@ -147,6 +146,13 @@ def main():
         list_imgs = []
         list_subs = []
 
+        if gallery["template"]:
+            model = open(gallery["template"])
+            template = jinja2.Template(model.read())
+        else:
+            model = open(DEFAULT_TEMPLATE)
+            template = jinja2.Template(model.read())
+
         #build name <-> path list for sub galleries
         for sub in gallery["subgal"]:
             list_subs.append((galleries[sub]["name"], sub + ".html"))
@@ -166,6 +172,8 @@ def main():
         list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
 
         imgs = list(zip(list_thumbs, list_imgs))
+
+        # lb = [x for x in la if not x.startswith(l)]
 
         dir_tree = gallery["dir"].split("/")[:-1]
 

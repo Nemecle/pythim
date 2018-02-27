@@ -5,38 +5,49 @@
         "name": "*",
         "default_img_name": "all",
         "dir": ".",
-        "type": "default",
+        "template": "home.html",
         "description": "All of my work",
         "subgal": [
           "Featured",
           "Photography",
           "Drawings",
           "Archives"
+        ],
+        "exclude": [
+          "Featured"
         ]
       },
       "Featured": {
         "name": "Featured",
         "default_img_name": "Featured",
         "dir": "featured",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+          "all",
+          "Photography",
+          "Drawings",
+          "Archives"
+        ],
+        "exclude": [
         ]
       },
       "Archives": {
         "name": "Archives",
         "default_img_name": "Archives",
         "dir": "Archives",
-        "type": "default",
+        "template": "home.html",
         "description": "My old, sometime very old work",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Drawings": {
         "name": "Drawings",
         "default_img_name": "Drawings",
         "dir": "Drawings",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "digital",
@@ -44,81 +55,97 @@
           "KSP",
           "Traditional",
           "Inktober"
+        ],
+        "exclude": [
         ]
       },
       "digital": {
         "name": "Digital drawings",
         "default_img_name": "digital",
         "dir": "Drawings/Digital",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "draw_in_game_together",
           "KSP"
+        ],
+        "exclude": [
         ]
       },
       "draw_in_game_together": {
         "name": "Draw In Game (Together)",
         "default_img_name": "Draw In Game (Together)",
         "dir": "Drawings/Digital/draw_in_game_together",
-        "type": "default",
+        "template": "home.html",
         "description": "Drawings done during, Draw Together, Draw in Game Together or during Nyo's lives",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "KSP": {
         "name": "Kerbal Space Program",
         "default_img_name": "Kerbal Space Program",
         "dir": "Drawings/Digital/KSP",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Traditional": {
         "name": "Traditional",
         "default_img_name": "Traditional",
         "dir": "Drawings/Traditional",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "Inktober"
+        ],
+        "exclude": [
         ]
       },
       "Inktober": {
         "name": "Inktober",
         "default_img_name": "Drawings/Traditional/Inktober",
         "dir": "Drawings/Traditional/Inktober",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "Inktober 2016",
           "Inktober 2017"
+        ],
+        "exclude": [
         ]
       },
       "Inktober 2016": {
         "name": "Inktober 2016",
         "default_img_name": "Inktober 2016",
         "dir": "Drawings/Traditional/Inktober/inktober_2016",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Inktober 2017": {
         "name": "Inktober 2017",
         "default_img_name": "Inktober 2017",
         "dir": "Drawings/Traditional/Inktober/inktober_2017",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Photography": {
         "name": "Photography",
         "default_img_name": "Photography",
         "dir": "Photography",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "Concerts",
@@ -127,100 +154,122 @@
           "Scotland",
           "Vendee",
           "Weather"
+        ],
+        "exclude": [
         ]
       },
       "Concerts": {
         "name": "Concerts",
         "default_img_name": "Concerts",
         "dir": "Photography/Concerts",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "pratos",
           "single_ladies"
+        ],
+        "exclude": [
         ]
       },
       "pratos": {
         "name": "Pratos",
         "default_img_name": "Pratos",
         "dir": "Photography/Concerts/pratos",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "single_ladies": {
         "name": "Single Ladies",
         "default_img_name": "Single Ladies",
         "dir": "Photography/Concerts/single_ladies",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Fireworks": {
         "name": "Fireworks",
         "default_img_name": "Fireworks",
         "dir": "Photography/Fireworks",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
           "Aberdeen",
           "Annecy_feu_dartifice"
+        ],
+        "exclude": [
         ]
       },
       "Aberdeen": {
         "name": "Aberdeen",
         "default_img_name": "Aberdeen",
         "dir": "Photography/Fireworks/Aberdeen",
-        "type": "default",
+        "template": "home.html",
         "description": "Aberdeen's firework for the 5th of November",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Annecy_feu_dartifice": {
         "name": "Annecy feu dartifice",
         "default_img_name": "Annecy_feu_dartifice",
         "dir": "Photography/Fieworks/Annecy_feu_dartifice",
-        "type": "default",
+        "template": "home.html",
         "description": "Annecy's firework of 2013",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Ireland": {
         "name": "Ireland",
         "default_img_name": "Ireland",
         "dir": "Photography/Ireland",
-        "type": "default",
+        "template": "home.html",
         "description": "Galway and Aran Island",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Scotland": {
         "name": "Scotland",
         "default_img_name": "Scotland",
         "dir": "Photography/Scotland",
-        "type": "default",
+        "template": "home.html",
         "description": "Aberdeen and Edinburgh",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Vendee": {
         "name": "Vendée",
         "default_img_name": "Vendee",
         "dir": "Photography/Vendee",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       },
       "Weather": {
         "name": "Weather",
         "default_img_name": "Weather",
         "dir": "Photography/Weather",
-        "type": "default",
+        "template": "home.html",
         "description": "",
         "subgal": [
+        ],
+        "exclude": [
         ]
       }
     }
