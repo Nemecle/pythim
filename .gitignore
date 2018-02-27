@@ -1,7 +1,10 @@
-img/*
-img_/*
-output/*
+img/+
 *.sw*
+export/html/img/*
+!export/html/img/.gitkeep
+export/html/thumbnails/*
+!export/html/thumbnails/.gitkeep
+export/html/*.html
+export/html/*.css
 __pycache__/*
-.gitignore
 
