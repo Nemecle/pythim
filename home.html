@@ -11,7 +11,7 @@
       <h3> {% for sub, link in subs %}<span class = ".accent ">/</span><a href = "{{ link }}" class = "subs">{{ sub }}</a>  {% endfor %}</h3>
       <div class = "desc">{{ description }}</div>
       <div id="gallery">
-        <div class="content">{% for thumb, im in files %}
+        <div class="content">{% for im, thumb, t in files %}
           <div class = "image"><a href = "{{ im }}"><img class = "img" src = "{{ thumb }}" alt = "{{ item }}" /></a></div>{% endfor %}
         </div>
       </div>

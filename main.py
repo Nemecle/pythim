@@ -9,6 +9,7 @@ import jinja2
 import pprint
 
 from multiprocessing import Pool
+from operator import itemgetter
 from PIL import Image
 from PIL import ExifTags
 
@@ -28,7 +29,7 @@ import sys
 # IMAGE_DIR = "img/"
 # THUMB_DIR = "thumbnails/"
 
-CONFIG_FILE = "nem.json"
+CONFIG_FILE = "galleries.json"
 DEFAULT_TEMPLATE = "home.html"
 
 BASE_DIR  = "export/html/"
@@ -42,11 +43,18 @@ GENERATE_THUMBNAILS = True
 THUMB_SIZE = 1000
 
 
+def get_mtime(path):
+    """
+    return modification time (mtime)
+
+    """
+
+    return os.stat(path).st_ctime
+
+
 def get_directory_tree(path):
     """
     Return a list of files in given folder with hierarchy preserved
-
-    path -- path to list
 
     """
 
@@ -63,6 +71,31 @@ def get_directory_tree(path):
             file_list.append(os.path.join(relative_path, filen))
     # print("(get_directory_tree) returning {}".format(str(file_list)))
     return file_list
+
+
+def get_directory_tree_with_time(path):
+    """
+    Return a list of files with their mtime in given folder with hierarchy preserved
+    format: [[<file_path, <mtime>],... ]
+
+    """
+
+    file_list = []
+
+    try:
+        os.stat(path)
+    except:
+        print("(get_directory_tree) {} does not exist.".format(path))
+
+    for dir_, _, files in os.walk(path):
+        for filen in files:
+            relative_path = os.path.relpath(dir_, path)
+            file_path = os.path.join(relative_path, filen)
+
+            file_list.append([file_path, get_mtime(dir_ + "/" + filen)])
+    # print("(get_directory_tree) returning {}".format(str(file_list)))
+    return file_list
+
 
 
 def thumbnail(img, directory): 
@@ -115,14 +148,18 @@ def main():
 
     """
 
-    files = get_directory_tree(IMAGE_DIR)
-    # pprint.pprint(str(files))
+    print("working in: " + str(os.getcwd()))
+
+    files = get_directory_tree_with_time(IMAGE_DIR)
+    # files = get_directory_tree(IMAGE_DIR)
+
     data = json.load(open(CONFIG_FILE))
 
 
     if GENERATE_THUMBNAILS:
         file_number = len(files)
-        for i, f in enumerate(files):
+        for i, (f, t) in enumerate(files):
+            # f = f, t # remove mtime
             print("", end="\r")
             print("thumbnails: {}% ({} files processed)".format(int(i * 100/file_number), i), end="\r")
             thumbnail(IMAGE_DIR + f, BASE_DIR + THUMB_DIR)
@@ -160,20 +197,28 @@ def main():
 
             
         print("working with: " + IMAGE_DIR + gallery["dir"])
-
-        list_imgs = get_directory_tree(IMAGE_DIR + gallery["dir"])
-        # list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
-        # list_imgs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
+        list_imgs = get_directory_tree_with_time(IMAGE_DIR + gallery["dir"])
 
         print("number of files: {}".format(len(list_imgs)))
 
+        # list_thumbs = [(THUMB_DIR + s.split("/")[-1], t) for s, t in list_imgs]
+        # list_imgs = [(IMAGE_DIR + gallery["dir"] + "/" + s, t) for s, t in list_imgs]
 
-        list_thumbs = [THUMB_DIR + s.split("/")[-1] for s in list_imgs]
-        list_imgs = [IMAGE_DIR + gallery["dir"] + "/" + s for s in list_imgs]
 
-        imgs = list(zip(list_thumbs, list_imgs))
+        imgs = [ \
+                (IMAGE_DIR + gallery["dir"] + "/" + s, \
+                THUMB_DIR + s.split("/")[-1], \
+                t)\
+        for s, t in list_imgs]
+
+        imgs.sort(key=itemgetter(2))
+
+
+        #imgs = list(zip(list_thumbs, list_imgs))
 
         # lb = [x for x in la if not x.startswith(l)]
+
+
 
         dir_tree = gallery["dir"].split("/")[:-1]
 

@@ -4,11 +4,12 @@ TODO:
 * fix thumbnail collision issue;
 * add exclusion system;
 * clean code
-* add appropriate directories to repo;
 * add automatic generation of json config from existing directory;
-* add progressive loading/pages?
+* add interlaced thumbnails (formely: "add progressive loading/pages?")
 * fix main page title?
 * add argument system instead of constants
+* add automatic creation of non-existing directories
+* add sort mode option
 
 
 Utilities:
