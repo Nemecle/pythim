@@ -1,12 +1,15 @@
 #!/home/nemecle/anaconda3/bin/python3.6
 """
-Gallery generation
+Static gallery generation in python
+put images in img/ and modify galleries.json
+
 """
 
 import json
 import os
 import jinja2
 import pprint
+import hashlib
 
 from multiprocessing import Pool
 from operator import itemgetter
@@ -32,14 +35,14 @@ import sys
 CONFIG_FILE = "galleries.json"
 DEFAULT_TEMPLATE = "home.html"
 
-BASE_DIR  = "export/html/"
+BASE_DIR  = "output/html/"
 HTML_DIR  = BASE_DIR + ""
 IMAGE_DIR = "img/"
 THUMB_DIR = "thumbnails/"
 
 
 
-GENERATE_THUMBNAILS = True
+GENERATE_THUMBNAILS = False
 THUMB_SIZE = 1000
 
 
@@ -50,6 +53,15 @@ def get_mtime(path):
     """
 
     return os.stat(path).st_ctime
+
+
+def get_hash(s):
+    """
+    return sha256 hash of given string
+
+    """
+
+    return str(int(hashlib.sha256(s.encode("utf-8")).hexdigest(), 16) % 10**16)
 
 
 def get_directory_tree(path):
@@ -106,7 +118,7 @@ def thumbnail(img, directory):
 
     """
 
-    filename = img.split("/")[-1]
+    # filename = img.split("/")[-1]
     # print("thumbnailing {} to {}".format(filename, directory))
 
     try:
@@ -132,8 +144,10 @@ def thumbnail(img, directory):
     try:
         #print("thumbnail'd")
         image.thumbnail((THUMB_SIZE,THUMB_SIZE), Image.NEAREST)
+        image = image.convert('RGB')
 
         #print("saved")
+        filename = get_hash(img) + ".jpg"
         image.save(directory + filename)
 
         return 0
@@ -205,9 +219,10 @@ def main():
         # list_imgs = [(IMAGE_DIR + gallery["dir"] + "/" + s, t) for s, t in list_imgs]
 
 
+                #THUMB_DIR + s.split("/")[-1], \
         imgs = [ \
                 (IMAGE_DIR + gallery["dir"] + "/" + s, \
-                THUMB_DIR + s.split("/")[-1], \
+                get_hash(s) + ".jpg", \
                 t)\
         for s, t in list_imgs]
 
