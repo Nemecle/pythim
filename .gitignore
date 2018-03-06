@@ -2,11 +2,11 @@ img/*
 img_t
 !img/.gitkeep
 *.sw*
-export/html/img/*
-!export/html/img/.gitkeep
-export/html/thumbnails/*
-!export/html/thumbnails/.gitkeep
-export/html/*.html
-export/html/*.css
+output/html/img/*
+!output/html/img/.gitkeep
+output/html/thumbnails/*
+!output/html/thumbnails/.gitkeep
+output/html/*.html
+output/html/*.css
 __pycache__/*
 

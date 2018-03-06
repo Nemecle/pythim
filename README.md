@@ -1,7 +1,6 @@
 Static gallery generator. Work in progress.
 
 TODO:
-* fix thumbnail collision issue;
 * add exclusion system;
 * clean code
 * add automatic generation of json config from existing directory;

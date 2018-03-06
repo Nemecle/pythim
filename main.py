@@ -42,7 +42,7 @@ THUMB_DIR = "thumbnails/"
 
 
 
-GENERATE_THUMBNAILS = False
+GENERATE_THUMBNAILS = True
 THUMB_SIZE = 1000
 
 
@@ -170,16 +170,6 @@ def main():
     data = json.load(open(CONFIG_FILE))
 
 
-    if GENERATE_THUMBNAILS:
-        file_number = len(files)
-        for i, (f, t) in enumerate(files):
-            # f = f, t # remove mtime
-            print("", end="\r")
-            print("thumbnails: {}% ({} files processed)".format(int(i * 100/file_number), i), end="\r")
-            thumbnail(IMAGE_DIR + f, BASE_DIR + THUMB_DIR)
-
-    print()
-
 
     data = data[0]
     galleries = data["galleries"]
@@ -222,9 +212,20 @@ def main():
                 #THUMB_DIR + s.split("/")[-1], \
         imgs = [ \
                 (IMAGE_DIR + gallery["dir"] + "/" + s, \
-                get_hash(s) + ".jpg", \
+                THUMB_DIR + get_hash(IMAGE_DIR + gallery["dir"] + "/" + s) + ".jpg", \
                 t)\
         for s, t in list_imgs]
+
+        file_number = len(list_imgs)
+
+        if GENERATE_THUMBNAILS:
+            for i, (s, t) in enumerate(list_imgs):
+                print("", end="\r")
+                print("thumbnails: {}% ({} files processed)".format(int(i * 100/file_number), i), end="\r")
+                thumbnail(IMAGE_DIR + gallery["dir"] + "/" + s, BASE_DIR + THUMB_DIR)
+
+            print()
+
 
         imgs.sort(key=itemgetter(2))
 
