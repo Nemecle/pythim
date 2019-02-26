@@ -1,5 +1,4 @@
 img/*
-img_t
 !img/.gitkeep
 *.sw*
 output/html/img/*
@@ -10,3 +9,9 @@ output/html/*.html
 output/html/*.css
 __pycache__/*
 
+templates/img/*
+templates/rsc/ClearSans-Light.woff
+output/img/*
+!output/img/.gitkeep
+output/thumbnails/*
+!output/thumbnails/.gitkeep
