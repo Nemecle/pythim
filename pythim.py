@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #!/home/nemecle/anaconda3/bin/python3.6
 # C:\Users\Nemecle\Anaconda3\python.exe
 """
@@ -115,7 +116,7 @@ def thumbnail(img, directory, force=False):
         if os.path.isfile(directory + get_hash(img) + ".jpg") and not force:
             print("thumbnail for {} already exists".format(img))
             return
-        
+
 
         for orientation in ExifTags.TAGS.keys():
             if ExifTags.TAGS[orientation] == 'Orientation':
@@ -143,7 +144,10 @@ def thumbnail(img, directory, force=False):
         filename = get_hash(img) + ".jpg"
         image.save(directory + filename)
 
-        return 0
+        thumb = Image.open(directory + filename)
+        width, height = thumb.size
+
+        return directory + filename, width, height
 
     except Exception as e:
         print("(thumbnail) saving: " + str(e))
@@ -184,7 +188,10 @@ def main():
                 if not category in galleries:
                     galleries[category] = []
 
-                galleries[category].append(img_path)
+                galleries[category].append({"image":  img_path,\
+                                            "thumb":  "",\
+                                            "width":  0,\
+                                            "height": 0})
                 # print("appended {} to {}".format(file_path, category))
 
 
@@ -199,7 +206,9 @@ def main():
     #       automatically create directories
 
     # cp img to img directory
-    for file_path in get_file_list(galleries):
+    print(str(get_file_list(galleries)))
+    exit(0)
+    for file_path, _, _, _ in get_file_list(galleries):
         try:
             if not os.path.isfile(IMAGE_DIR + file_path):
                 shutil.copy2(FILE_DIR + file_path,\
@@ -210,8 +219,7 @@ def main():
         except Exception as e:
             print("Failed copying file: " + str(e))
 
-        thumbnail(FILE_DIR + file_path, THUMB_DIR)
-    # generate thumbnail
+        print(str(thumbnail(FILE_DIR + file_path, THUMB_DIR)))
 
     # generate gallery
 
