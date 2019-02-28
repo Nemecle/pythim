@@ -5,8 +5,8 @@ output/html/img/*
 !output/html/img/.gitkeep
 output/html/thumbnails/*
 !output/html/thumbnails/.gitkeep
-output/html/*.html
-output/html/*.css
+output/*.html
+output/*.css
 __pycache__/*
 
 templates/img/*

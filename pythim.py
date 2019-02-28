@@ -1,5 +1,5 @@
-#!/usr/bin/python3
 #!/home/nemecle/anaconda3/bin/python3.6
+#!/usr/bin/python3
 # C:\Users\Nemecle\Anaconda3\python.exe
 """
 Static gallery generation in python
@@ -72,7 +72,6 @@ def get_directory_tree(path):
         for filen in files:
             relative_path = os.path.relpath(dir_, path)
             file_list.append(os.path.join(relative_path, filen))
-    # print("(get_directory_tree) returning {}".format(str(file_list)))
     return file_list
 
 
@@ -104,6 +103,10 @@ def thumbnail(img, directory, force=False):
     create a thumbnail for a given img and store in directory
     EXIF code:
       https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image/6218425#6218425
+
+    TODO: optimise, requires to create thumbnail even
+    if it already exists to get infos
+      
     """
 
     # filename = img.split("/")[-1]
@@ -113,9 +116,7 @@ def thumbnail(img, directory, force=False):
         #   print("opening")
         image = Image.open(img)
 
-        if os.path.isfile(directory + get_hash(img) + ".jpg") and not force:
-            print("thumbnail for {} already exists".format(img))
-            return
+
 
 
         for orientation in ExifTags.TAGS.keys():
@@ -142,15 +143,51 @@ def thumbnail(img, directory, force=False):
 
         #print("saved")
         filename = get_hash(img) + ".jpg"
-        image.save(directory + filename)
+
+        if os.path.isfile(directory + get_hash(img) + ".jpg") and not force:
+            print("thumbnail for {} already exists".format(img))
+        else:
+            image.save(directory + filename)
 
         thumb = Image.open(directory + filename)
         width, height = thumb.size
 
-        return directory + filename, width, height
+        return filename, width, height
 
     except Exception as e:
         print("(thumbnail) saving: " + str(e))
+
+    return -1
+
+def get_thumbnail(img, directory, force=False):
+    """
+    create a thumbnail for a given img and store in directory
+    EXIF code:
+      https://stackoverflow.com/questions/4228530/pil-thumbnail-is-rotating-my-image/6218425#6218425
+
+    TODO: optimise, requires to create thumbnail even
+    if it already exists to get infos
+      
+    """
+
+    # filename = img.split("/")[-1]
+    # print("thumbnailing {} to {}".format(filename, directory))
+
+    try:
+        #   print("opening")
+        image = Image.open(img)
+
+        filename = get_hash(img) + ".jpg"
+
+        thumb = Image.open(directory + filename)
+        width, height = thumb.size
+
+        return filename, width, height
+
+    except Exception as e:
+        print("(thumbnail) saving: " + str(e))
+
+    return -1
 
 
 def get_file_list(galleries):
@@ -161,7 +198,6 @@ def get_file_list(galleries):
 
     file_list = []
     for _, gal in enumerate(galleries):
-        print(gal)
         for img in galleries[gal]:
             file_list.append(img)
 
@@ -185,17 +221,19 @@ def main():
             cat = categories.split(",")
 
             for category in cat:
+                category = category.replace("\"", "")
+                category = category.strip()
                 if not category in galleries:
                     galleries[category] = []
 
                 galleries[category].append({"image":  img_path,\
                                             "thumb":  "",\
-                                            "width":  0,\
-                                            "height": 0})
-                # print("appended {} to {}".format(file_path, category))
+                                            "thumb_width":  0,\
+                                            "thumb_height": 0})
+                # print("appended {} to {}".format(img_path, category))
 
 
-#     for _, gal in enumerate(galleries):
+ #     for _, gal in enumerate(galleries):
 #         print(gal)
 #         for img in galleries[gal]:
 #             print("  " + img)
@@ -206,22 +244,54 @@ def main():
     #       automatically create directories
 
     # cp img to img directory
-    print(str(get_file_list(galleries)))
-    exit(0)
-    for file_path, _, _, _ in get_file_list(galleries):
+
+    # print(str(get_file_list(galleries)))
+    # exit(0)
+    progress = 0
+    for image in get_file_list(galleries):
+        file_path = image["image"]
         try:
             if not os.path.isfile(IMAGE_DIR + file_path):
                 shutil.copy2(FILE_DIR + file_path,\
                              IMAGE_DIR + file_path)
             else:
-                print("(skipped) " + FILE_DIR + file_path)
+                # print("(skipped) " + FILE_DIR + file_path)
+                pass
 
         except Exception as e:
             print("Failed copying file: " + str(e))
 
-        print(str(thumbnail(FILE_DIR + file_path, THUMB_DIR)))
+
+        # thpath, thwidth, thheight = thumbnail(FILE_DIR + file_path, THUMB_DIR)
+        thpath, thwidth, thheight = get_thumbnail(FILE_DIR + file_path, THUMB_DIR)
+
+        image["thumb"] = thpath
+        image["thumb_width"] = thwidth
+        image["thumb_height"] = thheight
+
+        progress += 1
+        # print("image:" + str(progress))
 
     # generate gallery
+    model = open("gallery.j2.html")
+    template = jinja2.Template(model.read())
+
+    for name in galleries:
+        img_list = galleries[name]
+#        print(name + " \n#########\n" + str(len(galleries[name])))
+#        print("0: " + str(galleries[name][0]))
+
+        gallery_content = template.render(
+                              name=name, \
+                              images=img_list
+                              )
+
+
+        # os.makedirs(os.path.dirname("export/" + str(gallery["dir"]) + ".html"), exist_ok=True)
+        file = open(OUTPUT_DIR + name + ".html","w")
+        file.write(gallery_content)
+        file.close()
+
 
     return
 

@@ -58,8 +58,8 @@
       </span>
     </div>
     <div class = "images">
-      {% for link, width, height, src in images %}
-      <a href = "{{ link }}" style="--w: {{ width }}; --h: {{ height }}"><img src = "{{ src }"/></a>{% endfor %}
+      {% for image in images %}
+        <a href = "{{ image["image"] }}" style="--w: {{ image["thumb_width"] }}; --h: {{ image["thumb_width"] }}"><img src = "thumbnails/{{ image["thumb"] }}"/></a>{% endfor %}
     </div>
   </div>
 </body>
