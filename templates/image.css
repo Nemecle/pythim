@@ -119,12 +119,17 @@ li {
 }
 
 #image {
-  max-height: 30vw;
+  /*max-height: 30vw;*/
+  text-align: center;
 }
 
 img {
-  text-align: center;
-  width:95%;
+  max-height:85vh;
+  max-width: 80vw;
+}
+
+#title {
+  float: left;
 }
 
 #name {
