@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="image.css">
+  <link rel="stylesheet" type="text/css" href="rsc/image.css">
   <meta charset="UTF-8">
-  <title>Art.nemecl.eu</title>
+  <title>{{ title }} — art.nemecl.eu</title>
 </head>
 <body>
   <div id = "content">
-    <!--<h1  id = "spacer">(oui ceci est un test)</h1>-->
     <div class = "menu main_menu">
-      <a  class = "menu_item" href="https://nemecl.eu">·Home</a>
-      <a  class = "menu_item" href="https://blog.nemecl.eu">·Blog</a>
-      <a  class = "menu_item emphasis" href="https://art.nemecl.eu">Art</a>
-      <a  class = "menu_item" href="https://nemecl.eu/contact">·Contact</a>
+      <a class = "menu_item" href="https://nemecl.eu">·Home</a>
+      <a class = "menu_item" href="https://blog.nemecl.eu">·Blog</a>
+      <a class = "menu_item emphasis" href="https://art.nemecl.eu">Art</a>
+      <a class = "menu_item" href="https://nemecl.eu/contact">·Contact</a>
       <a class = "category_item" href="https://art.nemecl.eu/Photography">·Photography</a>
       <a class = "category_item" href="https://art.nemecl.eu/Photography/Drawings">·Drawings</a>
       <a class = "category_item" href="https://art.nemecl.eu/Archives">·Archives</a>
@@ -20,11 +19,11 @@
     </div>
     <br>
     <div id = "image">
-      <img src = "DWbwk75X0AAUICA.jpg"/>
+      <img src = "{{ image_link }}"/>
       <br>
       <span id = "title">
-        <span id = "name">Tunnel de Fourvière, Lyon</span><a class = "tags">#Photography</a><a class = "tags">#Urban</a><a class = "tags">#Lyon</a>
-        <div class = "description"></div>
+        <span id = "name">{{ title }}</span>{% for tag in tags %}<a class = "tags">#{{ tag }}</a>{% endfor %}
+        <div class = "description">{{ description }}</div>
       </span>
     </div>
   </div>

@@ -9,6 +9,7 @@ put images in img/ and modify galleries.json
 
 import json
 import os
+import re
 import jinja2
 import pprint
 import hashlib
@@ -31,6 +32,7 @@ import sys
 ## test config
 # CONFIG_FILE = "galleries.json"
 
+TEMPLATE_DIR = "templates/"
 OUTPUT_DIR = "output/"
 # BASE_DIR  = "export/html/"
 # HTML_DIR  = BASE_DIR + ""
@@ -159,6 +161,7 @@ def thumbnail(img, directory, force=False):
 
     return -1
 
+
 def get_thumbnail(img, directory, force=False):
     """
     create a thumbnail for a given img and store in directory
@@ -203,6 +206,7 @@ def get_file_list(galleries):
 
     return file_list
 
+
 def main():
     """
     generate gallery based on configuration file.
@@ -243,10 +247,9 @@ def main():
     # TODO: expand patterns such as '*'
     #       automatically create directories
 
-    # cp img to img directory
+    image_model = open(TEMPLATE_DIR + "image_display.j2.html")
+    template = jinja2.Template(image_model.read())
 
-    # print(str(get_file_list(galleries)))
-    # exit(0)
     progress = 0
     for image in get_file_list(galleries):
         file_path = image["image"]
@@ -261,33 +264,40 @@ def main():
         except Exception as e:
             print("Failed copying file: " + str(e))
 
-
-        # thpath, thwidth, thheight = thumbnail(FILE_DIR + file_path, THUMB_DIR)
         thpath, thwidth, thheight = get_thumbnail(FILE_DIR + file_path, THUMB_DIR)
 
         image["thumb"] = thpath
         image["thumb_width"] = thwidth
         image["thumb_height"] = thheight
 
-        progress += 1
-        # print("image:" + str(progress))
+        title = re.sub(r"(\.jpg|\.png)", "", file_path, flags=re.IGNORECASE)
+        file_name = re.sub(r"(\.jpg|\.png)", "", image["thumb"], flags=re.IGNORECASE)
+
+        image_page = template.render(
+                              title=title, \
+                              image_link="img/" + file_path, \
+                              tags=["placeholder"], \
+                              description="placeholder, Also"
+                              )
+
+        file = open(OUTPUT_DIR + file_name + ".html","w")
+        file.write(image_page)
+        file.close()
+        # print("wrote {} with title {} and file_name {}".format(OUTPUT_DIR + file_name + ".html", title, file_name))
+
 
     # generate gallery
-    model = open("gallery.j2.html")
+    model = open(TEMPLATE_DIR + "gallery.j2.html")
     template = jinja2.Template(model.read())
 
     for name in galleries:
         img_list = galleries[name]
-#        print(name + " \n#########\n" + str(len(galleries[name])))
-#        print("0: " + str(galleries[name][0]))
 
         gallery_content = template.render(
                               name=name, \
                               images=img_list
                               )
 
-
-        # os.makedirs(os.path.dirname("export/" + str(gallery["dir"]) + ".html"), exist_ok=True)
         file = open(OUTPUT_DIR + name + ".html","w")
         file.write(gallery_content)
         file.close()
