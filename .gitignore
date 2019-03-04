@@ -1,6 +1,7 @@
 img/*
 !img/.gitkeep
 *.sw*
+*.jpg
 output/html/img/*
 !output/html/img/.gitkeep
 output/html/thumbnails/*
