@@ -12,7 +12,10 @@ __pycache__/*
 
 templates/img/*
 templates/rsc/ClearSans-Light.woff
-output/img/*
-!output/img/.gitkeep
+output/i/img/*
+!output/i/img/.gitkeep
 output/thumbnails/*
 !output/thumbnails/.gitkeep
+output/i/*.html
+output/rsc/*
+!output/rsc/.gitkeep

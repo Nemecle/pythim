@@ -11,7 +11,7 @@ import json
 import os
 import re
 import jinja2
-import pprint
+from pprint import pprint
 import hashlib
 import shutil
 
@@ -39,7 +39,10 @@ OUTPUT_DIR = "output/"
 FILE_DIR = "img/"
 IMAGE_DIR = OUTPUT_DIR + "img/"
 THUMB_DIR = OUTPUT_DIR + "thumbnails/"
+IMG_HTML_DIR = OUTPUT_DIR + "i/"
 THUMB_SIZE = 1000
+
+NO_THUMBS = True
 
 
 def get_mtime(path):
@@ -100,7 +103,7 @@ def get_directory_tree_with_time(path):
     return file_list
 
 
-def thumbnail(img, directory, force=False):
+def create_thumbnail(img, directory, force=False):
     """
     create a thumbnail for a given img and store in directory
     EXIF code:
@@ -147,7 +150,7 @@ def thumbnail(img, directory, force=False):
         filename = get_hash(img) + ".jpg"
 
         if os.path.isfile(directory + get_hash(img) + ".jpg") and not force:
-            print("thumbnail for {} already exists".format(img))
+            print("(create_thumbnail) thumbnail for {} already exists".format(img))
         else:
             image.save(directory + filename)
 
@@ -157,12 +160,12 @@ def thumbnail(img, directory, force=False):
         return filename, width, height
 
     except Exception as e:
-        print("(thumbnail) saving: " + str(e))
+        print("(create_thumbnail) saving: " + str(e))
 
     return -1
 
 
-def get_thumbnail(img, directory, force=False):
+def get_thumbnail_hash(img, thumb_directory, force=False):
     """
     create a thumbnail for a given img and store in directory
     EXIF code:
@@ -179,16 +182,18 @@ def get_thumbnail(img, directory, force=False):
     try:
         #   print("opening")
         image = Image.open(img)
+        thash = get_hash(img)
 
-        filename = get_hash(img) + ".jpg"
+        filename = thash + ".jpg"
 
-        thumb = Image.open(directory + filename)
+        thumb = Image.open(thumb_directory + filename)
         width, height = thumb.size
 
-        return filename, width, height
+        return thash, width, height
 
     except Exception as e:
-        print("(thumbnail) saving: " + str(e))
+        pass
+        print("(get_thumbnail) {} as {}: ".format(img, thumb_directory + filename) + str(e))
 
     return -1
 
@@ -222,6 +227,10 @@ def main():
             im_path = i_path.replace("\"", "") 
             img_path = im_path.strip()
 
+
+            if not NO_THUMBS:
+                create_thumbnail(IMAGE_DIR + img_path, THUMB_DIR)
+
             cat = categories.split(",")
 
             for category in cat:
@@ -232,6 +241,7 @@ def main():
 
                 galleries[category].append({"image":  img_path,\
                                             "thumb":  "",\
+                                            "thumb_hash":  "",\
                                             "thumb_width":  0,\
                                             "thumb_height": 0})
                 # print("appended {} to {}".format(img_path, category))
@@ -264,15 +274,23 @@ def main():
         except Exception as e:
             print("Failed copying file: " + str(e))
 
-        thpath, thwidth, thheight = get_thumbnail(FILE_DIR + file_path, THUMB_DIR)
+        thumb = get_thumbnail_hash(IMAGE_DIR + file_path, THUMB_DIR)
 
-        image["thumb"] = thpath
+        if thumb is not -1:
+            thpath, thwidth, thheight = thumb
+        else:
+            print("failed to get thumbnail")
+            continue;
+
+        image["thumb_hash"] = thpath + ".html"
+        image["thumb"] = thpath + ".jpg"
         image["thumb_width"] = thwidth
         image["thumb_height"] = thheight
 
         title = re.sub(r"(\.jpg|\.png)", "", file_path, flags=re.IGNORECASE)
         file_name = re.sub(r"(\.jpg|\.png)", "", image["thumb"], flags=re.IGNORECASE)
 
+        # print(title, "img/" + file_path, ["placeholder"], "placeholder, Also")
         image_page = template.render(
                               title=title, \
                               image_link="img/" + file_path, \
@@ -280,7 +298,7 @@ def main():
                               description="placeholder, Also"
                               )
 
-        file = open(OUTPUT_DIR + file_name + ".html","w")
+        file = open(IMG_HTML_DIR + thpath + ".html","w")
         file.write(image_page)
         file.close()
         # print("wrote {} with title {} and file_name {}".format(OUTPUT_DIR + file_name + ".html", title, file_name))
@@ -290,9 +308,12 @@ def main():
     model = open(TEMPLATE_DIR + "gallery.j2.html")
     template = jinja2.Template(model.read())
 
+    print ("########### PRINTING GALLERIES ###############")
     for name in galleries:
         img_list = galleries[name]
 
+        # pprint(name)
+        # pprint(img_list)
         gallery_content = template.render(
                               name=name, \
                               images=img_list
